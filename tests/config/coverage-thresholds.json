@@ -1,0 +1,58 @@
+{
+  "global": {
+    "branches": 80,
+    "functions": 80,
+    "lines": 80,
+    "statements": 80
+  },
+  "critical": {
+    "branches": 100,
+    "functions": 100,
+    "lines": 100,
+    "statements": 100,
+    "files": [
+      "**/utils/currency.ts",
+      "**/utils/calculations.ts"
+    ]
+  },
+  "api": {
+    "branches": 90,
+    "functions": 90,
+    "lines": 90,
+    "statements": 90,
+    "files": [
+      "**/api/**/route.ts"
+    ]
+  },
+  "components": {
+    "branches": 75,
+    "functions": 75,
+    "lines": 75,
+    "statements": 75,
+    "files": [
+      "**/app/**/page.tsx",
+      "**/components/**/*.tsx"
+    ]
+  },
+  "database": {
+    "branches": 85,
+    "functions": 85,
+    "lines": 85,
+    "statements": 85,
+    "files": [
+      "**/db/**/*.ts"
+    ]
+  },
+  "exclusions": [
+    "**/*.d.ts",
+    "**/node_modules/**",
+    "**/tests/**",
+    "**/.next/**",
+    "**/coverage/**",
+    "**/playwright-report/**",
+    "**/next.config.*",
+    "**/postcss.config.*",
+    "**/tailwind.config.*",
+    "**/drizzle.config.*"
+  ]
+}
