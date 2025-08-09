@@ -11,6 +11,7 @@ import { SessionIndicator } from '@/components/ui/SecurityBadge';
 import { formatCurrency, formatRelativeTime, calculatePercentage } from '@/lib/utils';
 import ExportModal from '@/components/export/ExportModal';
 import SearchTrigger from '@/components/search/SearchTrigger';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import Link from 'next/link';
 
 interface DashboardData {
@@ -122,7 +123,7 @@ function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 lg:p-8">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 p-4 sm:p-6 lg:p-8">
         <div className="max-w-7xl mx-auto">
           <SkeletonDashboard />
         </div>
@@ -132,7 +133,7 @@ function Dashboard() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
         <Card variant="elevated" className="w-full max-w-md">
           <CardBody className="text-center py-8">
             <div className="w-12 h-12 mx-auto mb-4 bg-error-100 rounded-full flex items-center justify-center">
@@ -166,13 +167,13 @@ function Dashboard() {
   ) : { percentage: 0, trend: 'neutral' };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header with Security Indicators */}
         <div className="mb-8">
           <div className="flex items-center justify-between mb-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900 flex items-center gap-3">
+              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 flex items-center gap-3">
                 Budget Tracker
                 <div className="text-lg">
                   <SessionIndicator 
@@ -181,7 +182,7 @@ function Dashboard() {
                   />
                 </div>
               </h1>
-              <p className="text-gray-600 mt-1 flex items-center gap-2">
+              <p className="text-gray-600 dark:text-gray-300 mt-1 flex items-center gap-2">
                 <span>Welcome back, {user?.name || 'User'}!</span>
                 <span className="text-xs bg-primary-100 text-primary-700 px-2 py-1 rounded-full">
                   {new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
@@ -190,10 +191,11 @@ function Dashboard() {
             </div>
             <div className="flex items-center gap-4">
               <SearchTrigger className="hidden sm:flex" />
-              <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500">
+              <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500 dark:text-gray-400">
                 <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse"></div>
                 <span>Live Data</span>
               </div>
+              <ThemeToggle variant="dropdown" />
               <Button
                 onClick={signOut}
                 variant="ghost"

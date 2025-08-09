@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useAuth } from '@/hooks/useAuth';
+import { ThemeToggle } from '@/components/ui/ThemeToggle';
 
 interface Budget {
   id: number;
@@ -141,31 +142,32 @@ function BudgetsPageContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 flex items-center justify-center">
-        <div className="text-slate-500">Loading...</div>
+      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center">
+        <div className="text-gray-500 dark:text-gray-400">Loading...</div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-slate-900">Budgets</h1>
-            <p className="text-slate-600 mt-1">Set and track your monthly spending limits</p>
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">Budgets</h1>
+            <p className="text-gray-600 dark:text-gray-300 mt-1">Set and track your monthly spending limits</p>
           </div>
           <div className="flex gap-2 items-center">
             <input
               type="month"
               value={selectedMonth}
               onChange={(e) => setSelectedMonth(e.target.value)}
-              className="px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
+            <ThemeToggle variant="simple" />
             <button
               onClick={() => window.location.href = '/'}
-              className="px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors text-sm font-medium"
+              className="px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors text-sm font-medium"
             >
               Back to Dashboard
             </button>
@@ -183,50 +185,50 @@ function BudgetsPageContent() {
 
         {/* Summary Cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-slate-600">Total Budget</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Budget</h3>
               <span className="text-2xl">💰</span>
             </div>
             <p className="text-2xl font-bold text-blue-600">
               {formatCurrency(totalBudget)}
             </p>
-            <p className="text-xs text-slate-500 mt-1">For {new Date(selectedMonth + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">For {new Date(selectedMonth + '-01').toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-slate-600">Total Spent</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Total Spent</h3>
               <span className="text-2xl">💸</span>
             </div>
             <p className="text-2xl font-bold text-red-600">
               {formatCurrency(totalSpent)}
             </p>
-            <p className="text-xs text-slate-500 mt-1">Actual spending</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Actual spending</p>
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-slate-200">
+          <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-6 border border-gray-200 dark:border-gray-700">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="text-sm font-medium text-slate-600">Remaining</h3>
+              <h3 className="text-sm font-medium text-gray-600 dark:text-gray-400">Remaining</h3>
               <span className="text-2xl">💵</span>
             </div>
             <p className={`text-2xl font-bold ${totalBudget - totalSpent >= 0 ? 'text-green-600' : 'text-red-600'}`}>
               {formatCurrency(totalBudget - totalSpent)}
             </p>
-            <p className="text-xs text-slate-500 mt-1">Available to spend</p>
+            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Available to spend</p>
           </div>
         </div>
 
         {/* Budgets List */}
-        <div className="bg-white rounded-xl shadow-sm border border-slate-200">
-          <div className="p-6 border-b border-slate-200">
-            <h2 className="text-xl font-bold text-slate-900">Budget Items</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-200 dark:border-gray-700">
+          <div className="p-6 border-b border-gray-200 dark:border-gray-700">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100">Budget Items</h2>
           </div>
           
           {budgets.length === 0 ? (
-            <p className="text-slate-500 text-center py-12">No budgets set for this month. Create your first budget to start tracking!</p>
+            <p className="text-gray-500 dark:text-gray-400 text-center py-12">No budgets set for this month. Create your first budget to start tracking!</p>
           ) : (
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-gray-100 dark:divide-gray-700">
               {budgets.map((budget) => {
                 const percentage = calculatePercentage(budget.spent, budget.amount);
                 const isOverBudget = budget.spent > budget.amount;
@@ -239,7 +241,7 @@ function BudgetsPageContent() {
                           <span className="text-2xl">{budget.categoryIcon}</span>
                         )}
                         <div>
-                          <h3 className="font-medium text-slate-900">{budget.name}</h3>
+                          <h3 className="font-medium text-gray-900 dark:text-gray-100">{budget.name}</h3>
                           {budget.categoryName && (
                             <span 
                               className="inline-block mt-1 px-2 py-1 rounded-full text-xs font-medium"
@@ -265,13 +267,13 @@ function BudgetsPageContent() {
                     
                     <div className="space-y-2">
                       <div className="flex justify-between text-sm">
-                        <span className="text-slate-600">Progress</span>
-                        <span className={`font-medium ${isOverBudget ? 'text-red-600' : 'text-slate-900'}`}>
+                        <span className="text-gray-600 dark:text-gray-400">Progress</span>
+                        <span className={`font-medium ${isOverBudget ? 'text-red-600' : 'text-gray-900 dark:text-gray-100'}`}>
                           {formatCurrency(budget.spent)} / {formatCurrency(budget.amount)}
                         </span>
                       </div>
                       
-                      <div className="w-full bg-slate-100 rounded-full h-3">
+                      <div className="w-full bg-gray-100 dark:bg-gray-700 rounded-full h-3">
                         <div
                           className={`h-3 rounded-full transition-all ${
                             isOverBudget ? 'bg-red-500' : percentage > 75 ? 'bg-yellow-500' : 'bg-green-500'
@@ -280,7 +282,7 @@ function BudgetsPageContent() {
                         />
                       </div>
                       
-                      <div className="flex justify-between text-xs text-slate-500">
+                      <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
                         <span>{percentage}% used</span>
                         <span>{formatCurrency(budget.amount - budget.spent)} remaining</span>
                       </div>
@@ -296,41 +298,41 @@ function BudgetsPageContent() {
       {/* Add Budget Modal */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-xl p-6 max-w-md w-full">
-            <h2 className="text-xl font-bold text-slate-900 mb-4">Add Budget</h2>
+          <div className="bg-white dark:bg-gray-800 rounded-xl p-6 max-w-md w-full">
+            <h2 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-4">Add Budget</h2>
             <form onSubmit={handleSubmit}>
               <div className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Budget Name</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Budget Name</label>
                   <input
                     type="text"
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="e.g., Monthly Groceries"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Amount</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Amount</label>
                   <input
                     type="number"
                     step="0.01"
                     required
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="0.00"
                   />
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Category (Optional)</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Category (Optional)</label>
                   <select
                     value={formData.categoryId}
                     onChange={(e) => setFormData({ ...formData, categoryId: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   >
                     <option value="">No specific category</option>
                     {categories.map((category) => (
@@ -339,17 +341,17 @@ function BudgetsPageContent() {
                       </option>
                     ))}
                   </select>
-                  <p className="text-xs text-slate-500 mt-1">Link to a category to track spending automatically</p>
+                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">Link to a category to track spending automatically</p>
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Month</label>
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Month</label>
                   <input
                     type="month"
                     required
                     value={formData.month}
                     onChange={(e) => setFormData({ ...formData, month: e.target.value })}
-                    className="w-full px-3 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                   />
                 </div>
               </div>
@@ -358,7 +360,7 @@ function BudgetsPageContent() {
                 <button
                   type="button"
                   onClick={() => setShowModal(false)}
-                  className="flex-1 px-4 py-2 bg-slate-200 text-slate-700 rounded-lg hover:bg-slate-300 transition-colors font-medium"
+                  className="flex-1 px-4 py-2 bg-gray-200 dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-600 transition-colors font-medium"
                 >
                   Cancel
                 </button>

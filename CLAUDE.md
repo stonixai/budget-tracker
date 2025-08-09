@@ -50,5 +50,5 @@ npm run db:studio      # Open Drizzle Studio GUI for database management
 
 ## Post Change Instructions
 - Always start the dev server after completing your changes.
-- Always run the nextdb generate, migrate, and nextjs build commands after making any changes.
+- Always run the nextjs generate, migrate, and build commands after making any changes.
 - Always start the dev server on port 3001. Use the kill command if the port is already in use.
