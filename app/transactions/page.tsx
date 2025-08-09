@@ -826,7 +826,9 @@ function TransactionsPageContent() {
                             size="sm"
                             leftIcon={<TrashIcon />}
                             className="text-error-600 hover:text-error-700 hover:bg-error-50"
-                          />
+                          >
+                            Delete
+                          </Button>
                         </div>
                         
                         <h3 className="font-medium text-gray-900 mb-2">{transaction.description}</h3>

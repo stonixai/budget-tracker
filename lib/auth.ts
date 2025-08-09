@@ -103,7 +103,6 @@ export const {
   ],
   pages: {
     signIn: "/auth/signin",
-    signUp: "/auth/signup",
     error: "/auth/error",
   },
   callbacks: {
@@ -134,7 +133,7 @@ export const {
       console.log("User signed in:", message.user?.email)
     },
     async signOut(message) {
-      console.log("User signed out:", message.token?.email || message.session?.user?.email)
+      console.log("User signed out:", message)
     },
   },
   debug: process.env.NODE_ENV === "development",

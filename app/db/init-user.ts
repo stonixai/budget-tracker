@@ -7,7 +7,7 @@ async function initUser() {
   
   try {
     // Check if user already exists
-    const existingUsers = await db.select().from(users).where(eq(users.id, 1));
+    const existingUsers = await db.select().from(users).where(eq(users.email, 'admin@example.com'));
     
     if (existingUsers.length > 0) {
       console.log('✅ User already exists:', existingUsers[0].email);
@@ -16,9 +16,8 @@ async function initUser() {
     
     // Create a default user
     const [user] = await db.insert(users).values({
-      id: 1,
       name: 'Default User',
-      email: 'user@example.com',
+      email: 'admin@example.com',
     }).returning();
     
     console.log('✅ Created default user:', user.email);

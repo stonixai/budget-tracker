@@ -38,13 +38,18 @@
   "dependencies": {
     "@auth/drizzle-adapter": "^1.10.0",
     "@types/bcryptjs": "^2.4.6",
+    "@types/papaparse": "^5.3.16",
     "bcryptjs": "^3.0.2",
     "better-sqlite3": "^12.2.0",
     "drizzle-orm": "^0.44.4",
+    "jspdf": "^3.0.1",
+    "jspdf-autotable": "^5.0.2",
     "next": "15.4.6",
     "next-auth": "^5.0.0-beta.29",
+    "papaparse": "^5.5.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "recharts": "^3.1.2",
     "zod": "^4.0.16"
   },
   "devDependencies": {

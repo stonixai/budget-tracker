@@ -335,7 +335,7 @@ export default function SignUpPage() {
                   autoComplete="new-password"
                   required
                   disabled={loading}
-                  isValid={formData.confirmPassword && formData.password === formData.confirmPassword}
+                  isValid={!!formData.confirmPassword && formData.password === formData.confirmPassword}
                 />
                 
                 {/* Terms and Privacy Agreement */}

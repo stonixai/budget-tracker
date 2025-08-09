@@ -9,6 +9,8 @@ import { Alert } from '@/components/ui/Alert';
 import { SkeletonDashboard } from '@/components/ui/LoadingSkeleton';
 import { SessionIndicator } from '@/components/ui/SecurityBadge';
 import { formatCurrency, formatRelativeTime, calculatePercentage } from '@/lib/utils';
+import ExportModal from '@/components/export/ExportModal';
+import SearchTrigger from '@/components/search/SearchTrigger';
 import Link from 'next/link';
 
 interface DashboardData {
@@ -28,21 +30,25 @@ interface Budget {
   name: string;
   amount: number;
   spent: number;
-  categoryName: string;
-  categoryColor: string;
-  categoryIcon: string;
+  month: string;
+  categoryName: string | null;
+  categoryColor: string | null;
+  categoryIcon: string | null;
 }
 
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [transactions, setTransactions] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [showExportModal, setShowExportModal] = useState(false);
   const { user, signOut } = useAuth();
 
   useEffect(() => {
     fetchDashboardData();
     fetchBudgets();
+    fetchTransactions();
   }, []);
 
   const fetchDashboardData = async () => {
@@ -80,6 +86,23 @@ function Dashboard() {
       setError('Failed to load budget data');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchTransactions = async () => {
+    try {
+      const response = await fetch('/api/transactions');
+      if (response.status === 401) {
+        signOut();
+        return;
+      }
+      if (!response.ok) {
+        throw new Error('Failed to fetch transactions');
+      }
+      const data = await response.json();
+      setTransactions(data);
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
     }
   };
 
@@ -166,6 +189,7 @@ function Dashboard() {
               </p>
             </div>
             <div className="flex items-center gap-4">
+              <SearchTrigger className="hidden sm:flex" />
               <div className="hidden sm:flex items-center gap-2 text-xs text-gray-500">
                 <div className="w-2 h-2 bg-success-500 rounded-full animate-pulse"></div>
                 <span>Live Data</span>
@@ -193,7 +217,17 @@ function Dashboard() {
                 Manage Budgets
               </Button>
             </Link>
-            <Button variant="ghost" size="sm" leftIcon={<DownloadIcon />}>
+            <Link href="/analytics">
+              <Button variant="outline" size="sm" leftIcon={<AnalyticsIcon />}>
+                View Analytics
+              </Button>
+            </Link>
+            <Button 
+              onClick={() => setShowExportModal(true)}
+              variant="ghost" 
+              size="sm" 
+              leftIcon={<DownloadIcon />}
+            >
               Export Data
             </Button>
           </div>
@@ -547,6 +581,14 @@ function Dashboard() {
             </CardBody>
           </Card>
         )}
+
+        {/* Export Modal */}
+        <ExportModal
+          isOpen={showExportModal}
+          onClose={() => setShowExportModal(false)}
+          transactions={transactions}
+          budgets={budgets}
+        />
       </div>
     </div>
   );
@@ -641,6 +683,12 @@ const ArrowDownIcon = () => (
 const LightBulbIcon = ({ className = "" }) => (
   <svg className={className} fill="none" viewBox="0 0 24 24" stroke="currentColor">
     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+  </svg>
+)
+
+const AnalyticsIcon = () => (
+  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 8v8m-4-5v5m-4-2v2m-2 4h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
   </svg>
 )
 

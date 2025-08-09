@@ -56,8 +56,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
       variant === 'filled' && 'bg-gray-100 border-transparent focus:bg-white focus:border-primary-500',
       (error || isInvalid) && 'error',
       isValid && 'success',
-      leftIcon && 'pl-10',
-      (rightIcon || showPasswordToggle) && 'pr-10',
+      !!leftIcon && 'pl-10',
+      !!(rightIcon || showPasswordToggle) && 'pr-10',
       isFocused && 'ring-2 ring-primary-100',
       disabled && 'opacity-50 cursor-not-allowed',
       className

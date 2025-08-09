@@ -127,7 +127,7 @@ const Modal: React.FC<ModalProps> = ({
 
   const modalContent = (
     <div
-      className="fixed inset-0 z-modal-backdrop bg-black/50 flex items-center justify-center p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-modal-backdrop bg-black/50 flex items-start justify-center p-4 backdrop-blur-sm overflow-y-auto"
       onClick={handleOverlayClick}
       aria-labelledby={title ? 'modal-title' : undefined}
       aria-describedby={description ? 'modal-description' : undefined}
@@ -136,7 +136,7 @@ const Modal: React.FC<ModalProps> = ({
         ref={modalRef}
         className={cn(
           'bg-white rounded-2xl shadow-2xl w-full transform transition-all duration-200 ease-out',
-          'animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2',
+          'animate-in fade-in-0 zoom-in-95 slide-in-from-bottom-2 my-8',
           sizeClasses[size],
           className
         )}
