@@ -1,21 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { createAuthenticatedHandler } from '@/lib/middleware';
 import { aiInsights } from '@/lib/ai-insights';
 import { cache } from '@/lib/cache';
 
-export async function GET(request: NextRequest) {
+async function handleGET(request: NextRequest, userId: string) {
   try {
-    const session = await auth();
-    
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const userId = session.user.id;
-
     // Try to get insights from cache first
     const cachedInsights = await cache.get('insights', userId);
     if (cachedInsights) {
@@ -41,20 +30,8 @@ export async function GET(request: NextRequest) {
   }
 }
 
-// Force refresh insights
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest, userId: string) {
   try {
-    const session = await auth();
-    
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
-    const userId = session.user.id;
-
     // Clear cached insights
     await cache.del('insights', userId);
 
@@ -76,3 +53,6 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export const GET = createAuthenticatedHandler(handleGET);
+export const POST = createAuthenticatedHandler(handlePOST);

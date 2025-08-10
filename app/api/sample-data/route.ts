@@ -1,26 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { auth } from '@/lib/auth';
+import { createAuthenticatedHandler } from '@/lib/middleware';
 import { generateSampleData, clearUserData } from '@/lib/sample-data';
 
-export async function POST(request: NextRequest) {
+async function handlePOST(request: NextRequest, userId: string) {
   try {
-    const session = await auth();
-    
-    if (!session?.user?.id) {
-      return NextResponse.json(
-        { error: 'Unauthorized' },
-        { status: 401 }
-      );
-    }
-
     const body = await request.json();
     const { action } = body;
 
     if (action === 'generate') {
-      const result = await generateSampleData(session.user.id);
+      const result = await generateSampleData(userId);
       return NextResponse.json(result);
     } else if (action === 'clear') {
-      const result = await clearUserData(session.user.id);
+      const result = await clearUserData(userId);
       return NextResponse.json(result);
     } else {
       return NextResponse.json(
@@ -39,3 +30,5 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
+export const POST = createAuthenticatedHandler(handlePOST);

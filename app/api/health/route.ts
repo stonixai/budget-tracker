@@ -4,7 +4,7 @@ import { cache } from '@/lib/cache';
 import { db } from '@/app/db';
 import { sql } from 'drizzle-orm';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   const startTime = Date.now();
   
   try {
