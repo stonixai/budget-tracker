@@ -1,6 +1,6 @@
 'use client';
 
-import React, { InputHTMLAttributes, forwardRef, useState } from 'react';
+import React, { InputHTMLAttributes, forwardRef, useState, useId } from 'react';
 import { cn } from '@/lib/utils';
 
 export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 'size'> {
@@ -40,7 +40,8 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
   ) => {
     const [showPassword, setShowPassword] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
-    const inputId = id || `input-${Math.random().toString(36).substring(2, 9)}`;
+    const reactId = useId();
+    const inputId = id || reactId;
     const inputType = showPasswordToggle && type === 'password' ? (showPassword ? 'text' : 'password') : type;
 
     const sizeClasses = {

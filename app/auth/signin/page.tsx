@@ -186,7 +186,7 @@ function SignInForm() {
                 value={email}
                 onChange={(e) => handleInputChange('email', e.target.value)}
                 error={formErrors.email}
-                placeholder="Enter your email address"
+                placeholder="    Enter your email address"
                 leftIcon={<EmailIcon />}
                 autoComplete="email"
                 required
@@ -200,7 +200,7 @@ function SignInForm() {
                 value={password}
                 onChange={(e) => handleInputChange('password', e.target.value)}
                 error={formErrors.password}
-                placeholder="Enter your password"
+                placeholder="    Enter your password"
                 leftIcon={<LockIcon />}
                 autoComplete="current-password"
                 required
@@ -214,14 +214,14 @@ function SignInForm() {
                     id="remember-me"
                     name="remember-me"
                     type="checkbox"
-                    className="h-4 w-4 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
+                    className="h-2 w-2 text-primary-600 focus:ring-primary-500 border-gray-300 rounded"
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                     Remember me
                   </label>
                 </div>
                 <div className="text-sm">
-                  <Link href="#" className="font-medium text-primary-600 hover:text-primary-500 focus:outline-none focus:underline transition-colors">
+                  <Link href="/auth/forgot-password" className="font-medium text-primary-600 hover:text-primary-500 focus:outline-none focus:underline transition-colors">
                     Forgot your password?
                   </Link>
                 </div>

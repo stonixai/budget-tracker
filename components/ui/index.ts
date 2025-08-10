@@ -6,4 +6,4 @@ export * from './Card';
 export * from './Alert';
 export * from './LoadingSkeleton';
 export * from './SecurityBadge';
-export * from './ThemeToggle';
+export * from './NextThemeToggle';

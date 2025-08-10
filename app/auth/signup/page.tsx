@@ -252,7 +252,7 @@ export default function SignUpPage() {
                   value={formData.name}
                   onChange={handleInputChange}
                   error={errors.name}
-                  placeholder="Enter your full name"
+                  placeholder="    Enter your full name"
                   leftIcon={<UserIcon />}
                   autoComplete="name"
                   required
@@ -267,7 +267,7 @@ export default function SignUpPage() {
                   value={formData.email}
                   onChange={handleInputChange}
                   error={errors.email}
-                  placeholder="Enter your email address"
+                  placeholder="    Enter your email address"
                   leftIcon={<EmailIcon />}
                   autoComplete="email"
                   required
@@ -283,7 +283,7 @@ export default function SignUpPage() {
                     value={formData.password}
                     onChange={handleInputChange}
                     error={errors.password}
-                    placeholder="Create a secure password"
+                    placeholder="    Create a secure password"
                     leftIcon={<LockIcon />}
                     autoComplete="new-password"
                     required
@@ -330,7 +330,7 @@ export default function SignUpPage() {
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
                   error={errors.confirmPassword}
-                  placeholder="Confirm your password"
+                  placeholder="    Confirm your password"
                   leftIcon={<LockIcon />}
                   autoComplete="new-password"
                   required
@@ -350,11 +350,11 @@ export default function SignUpPage() {
                   />
                   <label htmlFor="terms" className="text-sm text-gray-700 leading-relaxed">
                     I agree to the{' '}
-                    <Link href="#" className="text-primary-600 hover:text-primary-500 font-medium underline">
+                    <Link href="/legal/terms" className="text-primary-600 hover:text-primary-500 font-medium underline">
                       Terms of Service
                     </Link>
                     {' '}and{' '}
-                    <Link href="#" className="text-primary-600 hover:text-primary-500 font-medium underline">
+                    <Link href="/legal/privacy" className="text-primary-600 hover:text-primary-500 font-medium underline">
                       Privacy Policy
                     </Link>
                   </label>
