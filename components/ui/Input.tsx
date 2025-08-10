@@ -53,7 +53,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
     const inputClasses = cn(
       baseInputClasses,
       sizeClasses[size],
-      variant === 'filled' && 'bg-gray-100 border-transparent focus:bg-white focus:border-primary-500',
+      variant === 'filled' && 'bg-gray-100 dark:bg-gray-700 border-transparent focus:bg-white dark:focus:bg-gray-600 focus:border-primary-500',
       (error || isInvalid) && 'error',
       isValid && 'success',
       !!leftIcon && 'pl-10',
@@ -76,7 +76,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
         
         <div className="relative">
           {leftIcon && (
-            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500">
               {leftIcon}
             </div>
           )}
@@ -105,7 +105,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           {showPasswordToggle && type === 'password' && (
             <button
               type="button"
-              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+              className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 focus:outline-none focus:text-gray-600 dark:focus:text-gray-300"
               onClick={() => setShowPassword(!showPassword)}
               tabIndex={-1}
               aria-label={showPassword ? 'Hide password' : 'Show password'}
@@ -115,7 +115,7 @@ const Input = forwardRef<HTMLInputElement, InputProps>(
           )}
           
           {rightIcon && !showPasswordToggle && (
-            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400">
+            <div className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 dark:text-gray-500">
               {rightIcon}
             </div>
           )}

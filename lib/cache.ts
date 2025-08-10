@@ -4,6 +4,11 @@ import Redis from 'ioredis';
 let redis: Redis | null = null;
 
 export function getRedisClient() {
+  // Skip Redis connection if explicitly disabled or in development without Redis URL
+  if (process.env.REDIS_DISABLED === 'true' || (process.env.NODE_ENV === 'development' && !process.env.REDIS_URL)) {
+    return null;
+  }
+
   // In development, use a local Redis instance if available
   // In production, use environment variables for Redis connection
   if (!redis) {
@@ -13,6 +18,7 @@ export function getRedisClient() {
         // Connection options
         maxRetriesPerRequest: 3,
         lazyConnect: true, // Don't connect immediately
+        enableOfflineQueue: false, // Don't queue commands while offline
       });
 
       redis.on('error', (err) => {
@@ -56,7 +62,7 @@ export class CacheService {
     }
   }
 
-  async set(prefix: string, identifier: string, data: any, ttlSeconds: number = 300): Promise<void> {
+  async set(prefix: string, identifier: string, data: unknown, ttlSeconds: number = 300): Promise<void> {
     if (!this.redis) return;
 
     try {
@@ -97,7 +103,7 @@ export class CacheService {
     return this.get('dashboard', userId);
   }
 
-  async setDashboardData(userId: string, data: any, ttlSeconds: number = 300) {
+  async setDashboardData(userId: string, data: unknown, ttlSeconds: number = 300) {
     return this.set('dashboard', userId, data, ttlSeconds);
   }
 
@@ -109,7 +115,7 @@ export class CacheService {
     return this.get('transactions', `${userId}:${filters}`);
   }
 
-  async setTransactions(userId: string, filters: string, data: any, ttlSeconds: number = 180) {
+  async setTransactions(userId: string, filters: string, data: unknown, ttlSeconds: number = 180) {
     return this.set('transactions', `${userId}:${filters}`, data, ttlSeconds);
   }
 
@@ -117,7 +123,7 @@ export class CacheService {
     return this.get('analytics', `${userId}:${period}`);
   }
 
-  async setAnalytics(userId: string, period: string, data: any, ttlSeconds: number = 600) {
+  async setAnalytics(userId: string, period: string, data: unknown, ttlSeconds: number = 600) {
     return this.set('analytics', `${userId}:${period}`, data, ttlSeconds);
   }
 
@@ -125,7 +131,7 @@ export class CacheService {
     return this.get('budget-status', `${userId}:${month}`);
   }
 
-  async setBudgetStatus(userId: string, month: string, data: any, ttlSeconds: number = 300) {
+  async setBudgetStatus(userId: string, month: string, data: unknown, ttlSeconds: number = 300) {
     return this.set('budget-status', `${userId}:${month}`, data, ttlSeconds);
   }
 
@@ -137,8 +143,8 @@ export class CacheService {
       // You can implement cache warming logic here
       // For example, preload dashboard data, recent transactions, etc.
       console.log(`Warming cache for user ${userId}`);
-    } catch (error) {
-      console.warn('Cache warming error:', error);
+    } catch {
+      console.warn('Cache warming error');
     }
   }
 

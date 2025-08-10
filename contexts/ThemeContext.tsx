@@ -21,11 +21,27 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ 
   children, 
-  defaultTheme = 'light', 
+  defaultTheme = 'system', 
   storageKey = 'budget-tracker-theme' 
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
-  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>('light');
+  const [resolvedTheme, setResolvedTheme] = useState<'light' | 'dark'>(() => {
+    // Initial theme detection for SSR hydration consistency
+    if (typeof window === 'undefined') return 'light';
+    
+    try {
+      const saved = localStorage.getItem(storageKey) as Theme;
+      if (saved === 'dark') return 'dark';
+      if (saved === 'light') return 'light';
+      if (saved === 'system' || !saved) {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+    } catch {
+      return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    }
+    
+    return 'light';
+  });
 
   useEffect(() => {
     try {
@@ -51,9 +67,15 @@ export function ThemeProvider({
       setResolvedTheme(newResolvedTheme);
 
       const root = document.documentElement;
-      root.classList.remove('light', 'dark');
-      root.classList.add(newResolvedTheme);
-      root.setAttribute('data-theme', newResolvedTheme);
+      // Only update if different to prevent unnecessary DOM mutations
+      if (!root.classList.contains(newResolvedTheme)) {
+        root.classList.remove('light', 'dark');
+        root.classList.add(newResolvedTheme);
+        root.setAttribute('data-theme', newResolvedTheme);
+        
+        // Force style recalculation for better consistency
+        root.style.colorScheme = newResolvedTheme;
+      }
     };
 
     // Run immediately on mount and theme changes

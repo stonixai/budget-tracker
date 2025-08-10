@@ -32,8 +32,8 @@ export const GET = createAuthenticatedHandler(async function handleGET(request: 
       conditions.push(eq(userAccounts.isActive, isActive === 'true'));
     }
     
-    if (type) {
-      conditions.push(eq(userAccounts.type, type as any));
+    if (type && ['checking', 'savings', 'credit', 'investment', 'loan', 'cash'].includes(type)) {
+      conditions.push(eq(userAccounts.type, type as 'checking' | 'savings' | 'credit' | 'investment' | 'loan' | 'cash'));
     }
 
     // Fetch user accounts

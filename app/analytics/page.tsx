@@ -1,10 +1,10 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
-import { Card, CardHeader, CardBody } from '@/components/ui/Card';
+import { Card, CardBody } from '@/components/ui/Card';
 import { Alert } from '@/components/ui/Alert';
 import { SkeletonTable } from '@/components/ui/LoadingSkeleton';
 import { SessionIndicator } from '@/components/ui/SecurityBadge';
@@ -45,17 +45,7 @@ function AnalyticsPageContent() {
   const [timeRange, setTimeRange] = useState<'week' | 'month' | '3months' | '6months' | 'year'>('month');
   const { user, signOut } = useAuth();
 
-  useEffect(() => {
-    fetchTransactions();
-  }, []);
-
-  useEffect(() => {
-    if (transactions.length > 0) {
-      calculateSummary();
-    }
-  }, [transactions, timeRange]);
-
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       setError(null);
       const response = await fetch('/api/transactions');
@@ -74,11 +64,11 @@ function AnalyticsPageContent() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [signOut]);
 
-  const calculateSummary = () => {
+  const calculateSummary = useCallback(() => {
     const now = new Date();
-    let startDate = new Date();
+    const startDate = new Date();
     
     // Set date range
     switch (timeRange) {
@@ -160,7 +150,17 @@ function AnalyticsPageContent() {
       topCategory,
       spendingTrend
     });
-  };
+  }, [transactions, timeRange]);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
+  useEffect(() => {
+    if (transactions.length > 0) {
+      calculateSummary();
+    }
+  }, [transactions, timeRange, calculateSummary]);
 
   if (loading) {
     return (

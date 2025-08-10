@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { performanceMonitor } from '@/lib/performance';
 import { cache } from '@/lib/cache';
+// import { emailService } from '@/lib/email';
 import { db } from '@/app/db';
 import { sql } from 'drizzle-orm';
 
@@ -11,7 +12,7 @@ export async function GET() {
     const health = {
       status: 'healthy' as 'healthy' | 'degraded' | 'unhealthy',
       timestamp: new Date().toISOString(),
-      services: {} as any,
+      services: {} as Record<string, unknown>,
       performance: performanceMonitor.getHealthStatus(),
       uptime: process.uptime(),
       responseTime: 0,
@@ -45,7 +46,7 @@ export async function GET() {
       if (!cacheHealthy && health.status === 'healthy') {
         health.status = 'degraded';
       }
-    } catch (error) {
+    } catch {
       health.services.cache = {
         status: 'degraded',
         error: 'Cache health check failed',
@@ -55,6 +56,12 @@ export async function GET() {
         health.status = 'degraded';
       }
     }
+
+    // Email service health check (disabled for now)
+    health.services.email = {
+      status: 'degraded',
+      note: 'Email service not configured - notifications will be logged',
+    };
 
     // Memory usage
     const memUsage = process.memoryUsage();

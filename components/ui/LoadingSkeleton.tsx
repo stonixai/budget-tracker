@@ -23,7 +23,7 @@ const Skeleton: React.FC<SkeletonProps> = ({
 }) => {
   const baseClass = cn(
     'skeleton',
-    !animated && 'bg-gray-200',
+    !animated && 'bg-gray-200 dark:bg-gray-700',
     variant === 'circular' && 'rounded-full',
     variant === 'text' && 'skeleton-text',
     className
@@ -102,7 +102,7 @@ const SkeletonTable: React.FC<{ rows?: number; columns?: number }> = ({
   return (
     <div className="card overflow-hidden">
       {/* Table Header */}
-      <div className="border-b border-gray-200 p-4">
+      <div className="border-b border-gray-200 dark:border-gray-700 p-4">
         <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>
           {Array.from({ length: columns }).map((_, index) => (
             <Skeleton key={`header-${index}`} variant="text" className="h-4 w-3/4" />
@@ -111,7 +111,7 @@ const SkeletonTable: React.FC<{ rows?: number; columns?: number }> = ({
       </div>
       
       {/* Table Body */}
-      <div className="divide-y divide-gray-200">
+      <div className="divide-y divide-gray-200 dark:divide-gray-700">
         {Array.from({ length: rows }).map((_, rowIndex) => (
           <div key={`row-${rowIndex}`} className="p-4">
             <div className="grid gap-4" style={{ gridTemplateColumns: `repeat(${columns}, 1fr)` }}>

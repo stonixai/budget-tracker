@@ -5,7 +5,7 @@ import ProtectedRoute from '@/components/auth/ProtectedRoute';
 import { useAuth } from '@/hooks/useAuth';
 import { Button } from '@/components/ui/Button';
 import { Card, CardHeader, CardBody } from '@/components/ui/Card';
-import { Alert } from '@/components/ui/Alert';
+// import { Alert } from '@/components/ui/Alert';
 import { SkeletonDashboard } from '@/components/ui/LoadingSkeleton';
 import { SessionIndicator } from '@/components/ui/SecurityBadge';
 import { formatCurrency, formatRelativeTime, calculatePercentage } from '@/lib/utils';
@@ -13,6 +13,18 @@ import ExportModal from '@/components/export/ExportModal';
 import SearchTrigger from '@/components/search/SearchTrigger';
 import { ThemeToggle } from '@/components/ui/ThemeToggle';
 import Link from 'next/link';
+
+interface Transaction {
+  id: number;
+  amount: number;
+  description: string;
+  type: 'income' | 'expense';
+  date: string;
+  categoryId: number;
+  categoryName: string;
+  categoryColor: string;
+  categoryIcon: string;
+}
 
 interface DashboardData {
   currentMonth: {
@@ -23,7 +35,7 @@ interface DashboardData {
     totalIncome: number;
     totalExpenses: number;
   };
-  recentTransactions: any[];
+  recentTransactions: Transaction[];
 }
 
 interface Budget {
@@ -40,7 +52,7 @@ interface Budget {
 function Dashboard() {
   const [dashboardData, setDashboardData] = useState<DashboardData | null>(null);
   const [budgets, setBudgets] = useState<Budget[]>([]);
-  const [transactions, setTransactions] = useState<any[]>([]);
+  const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [showExportModal, setShowExportModal] = useState(false);
@@ -139,8 +151,8 @@ function Dashboard() {
             <div className="w-12 h-12 mx-auto mb-4 bg-error-100 rounded-full flex items-center justify-center">
               <ExclamationTriangleIcon />
             </div>
-            <h2 className="text-lg font-semibold text-gray-900 mb-2">Unable to Load Dashboard</h2>
-            <p className="text-gray-600 mb-6">{error}</p>
+            <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">Unable to Load Dashboard</h2>
+            <p className="text-gray-600 dark:text-gray-300 mb-6">{error}</p>
             <Button 
               onClick={() => window.location.reload()}
               variant="primary"
@@ -354,8 +366,8 @@ function Dashboard() {
                     <ChartPieIcon className="w-5 h-5 text-primary-600" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Budget Overview</h2>
-                    <p className="text-sm text-gray-500">Track your spending limits</p>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Budget Overview</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Track your spending limits</p>
                   </div>
                 </div>
                 <Link href="/budgets">
@@ -398,17 +410,17 @@ function Dashboard() {
                               )}
                             </div>
                             <div>
-                              <h3 className="font-medium text-gray-900">{budget.name}</h3>
-                              <p className="text-sm text-gray-500">
+                              <h3 className="font-medium text-gray-900 dark:text-gray-100">{budget.name}</h3>
+                              <p className="text-sm text-gray-500 dark:text-gray-400">
                                 {formatCurrency(budget.amount - budget.spent)} remaining
                               </p>
                             </div>
                           </div>
                           <div className="text-right">
-                            <p className="text-sm font-semibold text-gray-900">
+                            <p className="text-sm font-semibold text-gray-900 dark:text-gray-100">
                               {formatCurrency(budget.spent)}
                             </p>
-                            <p className="text-xs text-gray-500">
+                            <p className="text-xs text-gray-500 dark:text-gray-400">
                               of {formatCurrency(budget.amount)}
                             </p>
                           </div>
@@ -473,8 +485,8 @@ function Dashboard() {
                     <CreditCardIcon className="w-5 h-5 text-primary-600" />
                   </div>
                   <div>
-                    <h2 className="text-lg font-semibold text-gray-900">Recent Activity</h2>
-                    <p className="text-sm text-gray-500">Latest transactions</p>
+                    <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100">Recent Activity</h2>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Latest transactions</p>
                   </div>
                 </div>
                 <Link href="/transactions">
@@ -500,7 +512,7 @@ function Dashboard() {
               ) : (
                 <div className="space-y-4">
                   {dashboardData.recentTransactions.slice(0, 5).map((transaction) => (
-                    <div key={transaction.id} className="flex items-center justify-between p-3 hover:bg-gray-50 rounded-lg transition-colors group">
+                    <div key={transaction.id} className="flex items-center justify-between p-3 hover:bg-gray-50 dark:hover:bg-gray-700 rounded-lg transition-colors group">
                       <div className="flex items-center gap-3">
                         <div className={`p-2 rounded-full ${
                           transaction.type === 'income' 
@@ -510,10 +522,10 @@ function Dashboard() {
                           {transaction.type === 'income' ? <ArrowUpIcon /> : <ArrowDownIcon />}
                         </div>
                         <div>
-                          <p className="font-medium text-gray-900 group-hover:text-primary-600 transition-colors">
+                          <p className="font-medium text-gray-900 dark:text-gray-100 group-hover:text-primary-600 transition-colors">
                             {transaction.description}
                           </p>
-                          <p className="text-sm text-gray-500">
+                          <p className="text-sm text-gray-500 dark:text-gray-400">
                             {formatRelativeTime(transaction.date)}
                           </p>
                         </div>

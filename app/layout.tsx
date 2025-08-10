@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import SessionProvider from "@/components/providers/SessionProvider";
 import { ThemeProvider } from "@/contexts/ThemeContext";
+// import { OnboardingTour } from "@/components/onboarding/OnboardingTour";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -25,7 +26,25 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="light" data-theme="light" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              try {
+                const theme = localStorage.getItem('budget-tracker-theme') || 'system';
+                const resolvedTheme = theme === 'system'
+                  ? window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+                  : theme;
+                document.documentElement.classList.add(resolvedTheme);
+                document.documentElement.setAttribute('data-theme', resolvedTheme);
+              } catch (e) {
+                console.warn('Theme detection failed:', e);
+              }
+            `
+          }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

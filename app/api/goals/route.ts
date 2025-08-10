@@ -28,12 +28,12 @@ export const GET = createAuthenticatedHandler(async function handleGET(request: 
     // Build query conditions
     const conditions = [eq(financialGoals.userId, userId)];
     
-    if (status) {
-      conditions.push(eq(financialGoals.status, status as any));
+    if (status && ['active', 'completed', 'paused', 'cancelled'].includes(status)) {
+      conditions.push(eq(financialGoals.status, status as 'active' | 'completed' | 'paused' | 'cancelled'));
     }
     
-    if (priority) {
-      conditions.push(eq(financialGoals.priority, priority as any));
+    if (priority && ['low', 'medium', 'high'].includes(priority)) {
+      conditions.push(eq(financialGoals.priority, priority as 'low' | 'medium' | 'high'));
     }
 
     // Fetch goals with category information

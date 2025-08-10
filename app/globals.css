@@ -167,6 +167,16 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   
+  /* Z-index utilities */
+  --z-dropdown: 1000;
+  --z-sticky: 1020;
+  --z-fixed: 1030;
+  --z-modal-backdrop: 1040;
+  --z-modal: 1050;
+  --z-popover: 1060;
+  --z-tooltip: 1070;
+  --z-toast: 1080;
+  
   /* Primary Color Palette */
   --color-primary-50: var(--primary-50);
   --color-primary-100: var(--primary-100);
@@ -409,6 +419,104 @@ html.dark body {
   background: linear-gradient(90deg, var(--gray-700) 25%, var(--gray-600) 50%, var(--gray-700) 75%);
 }
 
+/* Dark mode modal and overlay styles */
+.dark .fixed.inset-0 {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+/* Dark mode dropdown and popover styles */
+.dark select, .dark option {
+  background-color: var(--gray-800);
+  color: var(--gray-100);
+  border-color: var(--gray-600);
+}
+
+/* Dark mode focus styles */
+.dark *:focus-visible {
+  outline-color: var(--primary-400);
+}
+
+/* Dark mode scrollbar */
+.dark ::-webkit-scrollbar {
+  background-color: var(--gray-800);
+}
+
+.dark ::-webkit-scrollbar-track {
+  background-color: var(--gray-900);
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background-color: var(--gray-600);
+  border-radius: 4px;
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: var(--gray-500);
+}
+
+/* Additional dark mode improvements */
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+  color: var(--gray-100);
+}
+
+.dark p {
+  color: var(--gray-300);
+}
+
+.dark .bg-gray-50 {
+  background-color: var(--gray-800) !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: var(--gray-700) !important;
+}
+
+.dark .bg-gray-200 {
+  background-color: var(--gray-600) !important;
+}
+
+.dark .border-gray-100 {
+  border-color: var(--gray-700) !important;
+}
+
+.dark .border-gray-200 {
+  border-color: var(--gray-600) !important;
+}
+
+.dark .text-gray-500 {
+  color: var(--gray-400) !important;
+}
+
+.dark .text-gray-600 {
+  color: var(--gray-300) !important;
+}
+
+.dark .text-gray-700 {
+  color: var(--gray-200) !important;
+}
+
+.dark .text-gray-800 {
+  color: var(--gray-100) !important;
+}
+
+.dark .text-gray-900 {
+  color: var(--gray-100) !important;
+}
+
+/* Progress bar improvements */
+.dark .bg-gray-100 {
+  background-color: var(--gray-700) !important;
+}
+
+/* Skeleton loading improvements */
+.dark .bg-gray-200 {
+  background-color: var(--gray-700) !important;
+}
+
+.dark .bg-gray-300 {
+  background-color: var(--gray-600) !important;
+}
+
 /* System preference fallback - only when no theme class is explicitly set */
 @media (prefers-color-scheme: dark) {
   html:not(.light):not(.dark) {
@@ -448,6 +556,12 @@ html.dark body {
 html {
   scroll-behavior: smooth;
   height: 100%;
+  /* Prevent theme transition flicker */
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
 }
 
 body {
@@ -461,6 +575,8 @@ body {
   line-height: var(--leading-normal);
   min-height: 100%;
   font-size: var(--font-size-base);
+  /* Smooth theme transitions */
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
 
 /* Focus Styles for Accessibility */
@@ -558,6 +674,23 @@ body {
 .security-badge.info {
   background-color: var(--primary-100);
   color: var(--primary-700);
+}
+
+/* Dark mode form labels and groups */
+.dark .form-label {
+  color: var(--gray-200);
+}
+
+.dark .form-group {
+  color: var(--gray-200);
+}
+
+.dark .form-help {
+  color: var(--gray-400);
+}
+
+.dark .form-error {
+  color: var(--error-300);
 }
 
 /* Enhanced Button System */

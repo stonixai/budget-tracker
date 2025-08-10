@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { db } from '@/app/db';
 import { recurringTransactions, categories } from '@/app/db/schema';
-import { eq, and, desc, asc } from 'drizzle-orm';
+import { eq, and, asc } from 'drizzle-orm';
 import { z } from 'zod';
 import { createAuthenticatedHandler } from '@/lib/middleware';
 

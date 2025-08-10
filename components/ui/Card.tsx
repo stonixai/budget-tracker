@@ -25,9 +25,9 @@ const Card = forwardRef<HTMLDivElement, CardProps>(
   ({ variant = 'default', padding = 'md', className, children, ...props }, ref) => {
     const variantClasses = {
       default: 'card',
-      bordered: 'card border-2',
+      bordered: 'card border-2 border-gray-300 dark:border-gray-600',
       shadow: 'card shadow-lg',
-      elevated: 'card shadow-xl border border-gray-100',
+      elevated: 'card shadow-xl border border-gray-100 dark:border-gray-700',
     };
 
     const paddingClasses = {
