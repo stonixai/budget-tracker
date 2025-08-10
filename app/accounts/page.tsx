@@ -6,28 +6,25 @@ import { AccountForm } from '@/components/accounts/AccountForm';
 import { Button } from '@/components/ui/Button';
 import { Card } from '@/components/ui/Card';
 
-interface Account {
+interface UserAccount {
   id: number;
   name: string;
-  type: 'checking' | 'savings' | 'credit' | 'investment' | 'loan';
+  type: 'checking' | 'savings' | 'credit' | 'investment' | 'loan' | 'cash';
   balance: number;
   currency: string;
-  institution?: string | null;
   accountNumber?: string | null;
-  isActive: boolean;
+  institution?: string | null;
   color: string;
   icon?: string | null;
-  description?: string | null;
-  interestRate?: number | null;
-  creditLimit?: number | null;
-  minimumBalance?: number | null;
+  isActive: boolean;
+  isPrimary: boolean;
   createdAt: string;
   updatedAt: string;
 }
 
 export default function AccountsPage() {
   const [isFormOpen, setIsFormOpen] = useState(false);
-  const [editingAccount, setEditingAccount] = useState<Account | null>(null);
+  const [editingAccount, setEditingAccount] = useState<UserAccount | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
 
   const handleAccountCreated = () => {
@@ -36,7 +33,7 @@ export default function AccountsPage() {
     setEditingAccount(null);
   };
 
-  const handleEdit = (account: Account) => {
+  const handleEdit = (account: UserAccount) => {
     setEditingAccount(account);
     setIsFormOpen(true);
   };
@@ -109,8 +106,8 @@ export default function AccountsPage() {
         <Card className="p-6">
           <AccountsList
             key={refreshKey}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+            onEditAccount={handleEdit}
+            onDeleteAccount={handleDelete}
           />
         </Card>
 
@@ -119,7 +116,12 @@ export default function AccountsPage() {
           isOpen={isFormOpen}
           onClose={handleFormClose}
           onSuccess={handleAccountCreated}
-          account={editingAccount}
+          account={editingAccount ? {
+            ...editingAccount,
+            accountNumber: editingAccount.accountNumber || undefined,
+            institution: editingAccount.institution || undefined,
+            icon: editingAccount.icon || undefined,
+          } : undefined}
         />
       </div>
     </div>

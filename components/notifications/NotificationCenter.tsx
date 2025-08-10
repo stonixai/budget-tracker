@@ -46,7 +46,7 @@ export function NotificationCenter() {
       }
       
       const data = await response.json();
-      setNotifications(data);
+      setNotifications(data.notifications || []);
       setError(null);
     } catch (error) {
       console.error('Error fetching notifications:', error);

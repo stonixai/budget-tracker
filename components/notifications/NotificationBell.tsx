@@ -31,8 +31,8 @@ export function NotificationBell({ onNotificationClick }: NotificationBellProps)
       
       if (response.ok) {
         const data = await response.json();
-        setNotifications(data);
-        setUnreadCount(data.filter((n: Notification) => !n.isRead).length);
+        setNotifications(data.notifications);
+        setUnreadCount(data.metadata.unreadCount || 0);
       }
     } catch (error) {
       console.error('Error fetching notifications:', error);
@@ -208,9 +208,9 @@ export function NotificationBell({ onNotificationClick }: NotificationBellProps)
                 size="sm"
                 onClick={() => {
                   setIsOpen(false);
-                  if (onNotificationClick) {
-                    onNotificationClick();
-                  }
+                  // if (onNotificationClick && typeof onNotificationClick === 'function') {
+                  //   onNotificationClick();
+                  // }
                 }}
                 className="text-blue-600 hover:text-blue-700 text-sm"
               >

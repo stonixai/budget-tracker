@@ -11,6 +11,9 @@ export const users = sqliteTable('users', {
   emailVerified: integer('emailVerified', { mode: 'timestamp_ms' }),
   image: text('image'),
   password: text('password'), // For email/password authentication
+  mfaEnabled: integer('mfa_enabled', { mode: 'boolean' }).notNull().default(false),
+  mfaSecret: text('mfa_secret'), // TOTP secret key (encrypted)
+  backupCodes: text('backup_codes'), // JSON array of backup codes (encrypted)
   createdAt: text('created_at')
     .notNull()
     .default(sql`(datetime('now'))`),
