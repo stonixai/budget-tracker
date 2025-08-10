@@ -25,7 +25,7 @@ export const {
     maxAge: parseInt(process.env.SESSION_MAX_AGE || "30") * 24 * 60 * 60, // 30 days default
   },
   jwt: {
-    maxAge: parseInt(process.env.JWT_EXPIRY || "86400"), // 24 hours default
+    maxAge: parseInt(process.env.JWT_EXPIRY || "604800"), // 7 days default (7 * 24 * 60 * 60)
   },
   providers: [
     CredentialsProvider({
