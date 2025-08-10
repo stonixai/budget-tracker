@@ -46,7 +46,7 @@ export class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoun
 
 function DefaultErrorFallback({ error, reset }: { error?: Error; reset: () => void }) {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900">
+    <div className="min-h-screen flex items-center justify-center" style={{ background: 'var(--background)' }}>
       <div className="max-w-md w-full bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
         <div className="flex items-center justify-center w-12 h-12 mx-auto bg-red-100 rounded-full">
           <svg

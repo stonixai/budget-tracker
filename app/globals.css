@@ -262,44 +262,90 @@
 
 /* Light Mode Support */
 .light {
-  --background: #f8fafc;
-  --foreground: #0f172a;
+  --background: #f9fafb; /* Soft cool white */
+  --stripe-background: #f3f4f6; /* Light neutral gray */
+  --stripe-background-white: #ffffff; /* True white */
+  --stripe-background-soft: #e5e7eb; /* Softer mid-gray for subtle sectioning */
+  --accent: #6366f1; /* Vibrant indigo for buttons & highlights */
+  --text-color: #111827; /* Rich neutral black */
+  --foreground: #111827;
   
   /* Adjust colors for light mode */
-  --stripe-background: #f8fafc;
-  --stripe-background-white: #ffffff;
-  --stripe-background-soft: #f1f5f9;
-  --stripe-text-dark: #0f172a;
+  --stripe-text-dark: #111827;
   --stripe-text-muted: #64748b;
   --stripe-text-medium: #334155;
 }
 
 html.light,
 html.light body {
-  background: #f8fafc !important;
-  background-color: #f8fafc !important;
-  color: #0f172a !important;
+  background: #f9fafb !important;
+  background-color: #f9fafb !important;
+  color: #111827 !important;
+}
+
+/* Force light mode when data-theme="light" is set */
+html[data-theme="light"],
+html[data-theme="light"] body {
+  background: #f9fafb !important;
+  background-color: #f9fafb !important;
+  color: #111827 !important;
+}
+
+html[data-theme="light"] {
+  --background: #f9fafb !important;
+  --foreground: #111827 !important;
+  --stripe-background: #f3f4f6 !important;
+  --stripe-background-white: #ffffff !important;
+  --stripe-background-soft: #e5e7eb !important;
+  --accent: #6366f1 !important;
+  --text-color: #111827 !important;
+  --stripe-text-dark: #111827 !important;
+  --stripe-text-muted: #64748b !important;
+  --stripe-text-medium: #334155 !important;
+}
+
+/* Force dark mode when data-theme="dark" is set */
+html[data-theme="dark"],
+html[data-theme="dark"] body {
+  background: #0b0f1a !important;
+  background-color: #0b0f1a !important;
+  color: #f9fafb !important;
+}
+
+html[data-theme="dark"] {
+  --background: #0b0f1a !important;
+  --foreground: #f9fafb !important;
+  --stripe-background: #111827 !important;
+  --stripe-background-white: #1f2937 !important;
+  --stripe-background-soft: #374151 !important;
+  --accent: #60a5fa !important;
+  --text-color: #f9fafb !important;
+  --stripe-text-dark: #f9fafb !important;
+  --stripe-text-muted: #94a3b8 !important;
+  --stripe-text-medium: #cbd5e1 !important;
 }
 
 /* Dark Mode Support */
 .dark {
-  --background: #0f172a;
-  --foreground: #f1f5f9;
+  --background: #0b0f1a; /* Deep navy-black */
+  --stripe-background: #111827; /* Slightly lighter deep tone */
+  --stripe-background-white: #1f2937; /* Dark slate */
+  --stripe-background-soft: #374151; /* Mid-dark for soft contrasts */
+  --accent: #60a5fa; /* Cool tech blue for highlights */
+  --text-color: #f9fafb; /* Almost white text */
+  --foreground: #f9fafb;
   
   /* Adjust colors for dark mode */
-  --stripe-background: #0f172a;
-  --stripe-background-white: #1e293b;
-  --stripe-background-soft: #1e293b;
-  --stripe-text-dark: #f1f5f9;
+  --stripe-text-dark: #f9fafb;
   --stripe-text-muted: #94a3b8;
   --stripe-text-medium: #cbd5e1;
 }
 
 html.dark,
 html.dark body {
-  background: #0f172a !important;
-  background-color: #0f172a !important;
-  color: #f1f5f9 !important;
+  background: #0b0f1a !important;
+  background-color: #0b0f1a !important;
+  color: #f9fafb !important;
 }
 
 .dark .card {
@@ -519,19 +565,21 @@ html.dark body {
 
 /* System preference fallback - only when no theme class is explicitly set */
 @media (prefers-color-scheme: dark) {
-  html:not(.light):not(.dark) {
-    --background: var(--gray-900);
-    --foreground: var(--gray-100);
+  html:not(.light):not(.dark):not([data-theme]) {
+    --background: #0b0f1a;
+    --foreground: #f9fafb;
     
-    --stripe-background: var(--gray-900);
-    --stripe-background-white: var(--gray-800);
-    --stripe-background-soft: var(--gray-800);
-    --stripe-text-dark: var(--gray-100);
+    --stripe-background: #111827;
+    --stripe-background-white: #1f2937;
+    --stripe-background-soft: #374151;
+    --accent: #60a5fa;
+    --text-color: #f9fafb;
+    --stripe-text-dark: #f9fafb;
     --stripe-text-muted: var(--gray-400);
     --stripe-text-medium: var(--gray-300);
   }
   
-  html:not(.light):not(.dark) .card {
+  html:not(.light):not(.dark):not([data-theme]) .card {
     background-color: var(--gray-800);
     border-color: var(--gray-700);
   }

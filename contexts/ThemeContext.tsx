@@ -21,7 +21,7 @@ interface ThemeProviderProps {
 
 export function ThemeProvider({ 
   children, 
-  defaultTheme = 'system', 
+  defaultTheme = 'light', 
   storageKey = 'budget-tracker-theme' 
 }: ThemeProviderProps) {
   const [theme, setThemeState] = useState<Theme>(defaultTheme);
@@ -67,14 +67,27 @@ export function ThemeProvider({
       setResolvedTheme(newResolvedTheme);
 
       const root = document.documentElement;
-      // Only update if different to prevent unnecessary DOM mutations
-      if (!root.classList.contains(newResolvedTheme)) {
-        root.classList.remove('light', 'dark');
-        root.classList.add(newResolvedTheme);
-        root.setAttribute('data-theme', newResolvedTheme);
-        
-        // Force style recalculation for better consistency
-        root.style.colorScheme = newResolvedTheme;
+      const body = document.body;
+      
+      // Always update to ensure styles are applied
+      root.classList.remove('light', 'dark');
+      root.classList.add(newResolvedTheme);
+      root.setAttribute('data-theme', newResolvedTheme);
+      
+      // Force style recalculation for better consistency
+      root.style.colorScheme = newResolvedTheme;
+      
+      // Force immediate background application
+      if (newResolvedTheme === 'light') {
+        root.style.backgroundColor = '#f9fafb';
+        body.style.backgroundColor = '#f9fafb';
+        root.style.color = '#111827';
+        body.style.color = '#111827';
+      } else {
+        root.style.backgroundColor = '#0b0f1a';
+        body.style.backgroundColor = '#0b0f1a';
+        root.style.color = '#f9fafb';
+        body.style.color = '#f9fafb';
       }
     };
 

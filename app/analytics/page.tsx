@@ -164,7 +164,7 @@ function AnalyticsPageContent() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 p-4 sm:p-6 lg:p-8">
+      <div className="min-h-screen p-4 sm:p-6 lg:p-8" style={{ background: 'var(--background)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="mb-8">
             <div className="h-8 bg-gray-200 rounded w-48 mb-2"></div>
@@ -177,7 +177,7 @@ function AnalyticsPageContent() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen" style={{ background: 'var(--background)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Header */}
         <div className="mb-8">
