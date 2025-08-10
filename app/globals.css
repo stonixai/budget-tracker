@@ -252,40 +252,44 @@
 
 /* Light Mode Support */
 .light {
-  --background: var(--gray-50);
-  --foreground: var(--gray-900);
+  --background: #f8fafc;
+  --foreground: #0f172a;
   
   /* Adjust colors for light mode */
-  --stripe-background: var(--gray-50);
+  --stripe-background: #f8fafc;
   --stripe-background-white: #ffffff;
-  --stripe-background-soft: var(--gray-100);
-  --stripe-text-dark: var(--gray-900);
-  --stripe-text-muted: var(--gray-500);
-  --stripe-text-medium: var(--gray-700);
+  --stripe-background-soft: #f1f5f9;
+  --stripe-text-dark: #0f172a;
+  --stripe-text-muted: #64748b;
+  --stripe-text-medium: #334155;
 }
 
-.light body {
-  background: var(--gray-50) !important;
-  color: var(--gray-900) !important;
+html.light,
+html.light body {
+  background: #f8fafc !important;
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
 }
 
 /* Dark Mode Support */
 .dark {
-  --background: var(--gray-900);
-  --foreground: var(--gray-100);
+  --background: #0f172a;
+  --foreground: #f1f5f9;
   
   /* Adjust colors for dark mode */
-  --stripe-background: var(--gray-900);
-  --stripe-background-white: var(--gray-800);
-  --stripe-background-soft: var(--gray-800);
-  --stripe-text-dark: var(--gray-100);
-  --stripe-text-muted: var(--gray-400);
-  --stripe-text-medium: var(--gray-300);
+  --stripe-background: #0f172a;
+  --stripe-background-white: #1e293b;
+  --stripe-background-soft: #1e293b;
+  --stripe-text-dark: #f1f5f9;
+  --stripe-text-muted: #94a3b8;
+  --stripe-text-medium: #cbd5e1;
 }
 
-.dark body {
-  background: var(--gray-900) !important;
-  color: var(--gray-100) !important;
+html.dark,
+html.dark body {
+  background: #0f172a !important;
+  background-color: #0f172a !important;
+  color: #f1f5f9 !important;
 }
 
 .dark .card {
